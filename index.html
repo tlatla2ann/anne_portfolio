@@ -19,9 +19,9 @@ body {
     margin: 0;
     background: linear-gradient(
         135deg,
-        #f7f9fc 0%,
-        #f2effa 50%,
-        #faeef4 100%
+        #e6ecf5 0%,
+        #dcd6f7 40%,
+        #f5d0e6 100%
     );
 }
 
@@ -59,7 +59,7 @@ nav a {
 
 /* 메인 타이틀 */
 .hero {
-    padding: 35px 60px 25px;
+    padding: 35px 60px 40px;
     background: transparent;
 }
 
@@ -71,7 +71,7 @@ nav a {
 
 /* 그리드 영역 */
 .section {
-    padding: 10px 60px 60px;
+    padding: 10px 60px 20px;
     background: transparent;
 }
 
@@ -149,24 +149,36 @@ nav a {
 @media (max-width: 768px) {
 
     header {
-        padding: 20px;
+        padding: 15px 20px;
+    }
+
+    .logo {
+        font-size: 14px;
     }
 
     .hero {
-        padding: 30px 20px 5px;
+        padding: 20px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
     }
 
     .section {
-        padding: 5px 20px 40px;
+        padding: 10px 20px 20px;
     }
 
+/* 1열 3줄 구조 */
     .grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 
+/* 가로로 긴 사진 */
     .card img {
-        height: 110px;
+        width: 100%;
+        height: 240px;
+        object-fit: cover;
     }
 
     .hero h1 {
@@ -195,7 +207,7 @@ footer {
 </header>
 
 <section class="hero">
-    <h1>PORTFOLIO with you</h1>
+    <h1>PORTFOLIO</h1>
 </section>
 
 <section class="section">
@@ -257,4 +269,5 @@ window.onclick = function(e) {
 
 </body>
 </html>
+
 
