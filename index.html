@@ -5,12 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SIM EUNAE Portfolio</title>
 
+<link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Pretendard', sans-serif;
+    font-family: 'SUIT', sans-serif;
 }
 
 body {
@@ -24,7 +27,7 @@ body {
     );
 }
 
-/* 은은한 벽지 느낌 배경 */
+/* 배경 */
 body::before {
     content: "";
     position: fixed;
@@ -58,23 +61,26 @@ nav a {
 
 /* 메인 타이틀 */
 .hero {
-    padding: 100px 60px 60px;
+    padding: 60px 60px 20px;
     background: transparent;
 }
 
 .hero h1 {
-    font-size: 36px;
+    font-size: 56px;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .hero p {
     color: #777;
+    font-family: 'Great Vibes', cursive;
+    font-size: 28px;
+    letter-spacing: 1px;
 }
 
 /* 그리드 영역 */
 .section {
-    padding: 80px 60px;
+    padding: 40px 60px 80px;
     background: transparent;
 }
 
@@ -97,10 +103,12 @@ nav a {
     height: 400px;
     object-fit: cover;
     transition: 0.4s;
+    filter: brightness(0.65);
 }
 
 .card:hover img {
     transform: scale(1.05);
+    filter: brightness(1);
 }
 
 .card-title {
@@ -136,8 +144,8 @@ footer {
 </header>
 
 <section class="hero">
-    <h1>Space & Design Portfolio</h1>
-    <p>Architecture · Interior · Marketing Design</p>
+    <h1>PORTFOLIO with you</h1>
+    <p>Design a Value</p>
 </section>
 
 <section class="section">
@@ -167,5 +175,6 @@ footer {
 
 </body>
 </html>
+
 
 
