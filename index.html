@@ -206,7 +206,7 @@ footer {
 <header>
     <div class="logo">안녕하세요, 심은애입니다.</div>
     <nav>
-        <a href="#about">ABOUT</a>
+        <a href="about.html">ABOUT</a>
         <a href="#" id="contactBtn">CONTACT</a>
     </nav>
 </header>
@@ -252,16 +252,16 @@ footer {
 </div>
 
 <script>
-const modal = document.getElementById("aboutModal");
-const btn = document.getElementById("aboutBtn");
-const close = document.querySelector(".close");
+const modal = document.getElementById("contactModal");
+const btn = document.getElementById("contactBtn");
+const closeBtn = document.querySelector(".close");
 
 btn.onclick = function(e) {
   e.preventDefault();
   modal.style.display = "flex";
 }
 
-close.onclick = function() {
+closeBtn.onclick = function() {
   modal.style.display = "none";
 }
 
@@ -274,6 +274,7 @@ window.onclick = function(e) {
 
 </body>
 </html>
+
 
 
 
