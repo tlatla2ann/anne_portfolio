@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | 심은애</title>
+    <link href="https://cdn.jsdelivr.net/gh/sun-peak/suit-font@v1/style.css" rel="stylesheet">
+    <style>
+        :root {
+            --apple-blue: #007AFF;
+            --text-main: #1d1d1f;
+            --text-sub: #86868b;
+            --line-color: #d2d2d7;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            font-family: 'SUIT', sans-serif;
+            background-color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* --- 1. 배경 컨텐츠 레이아웃 --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5px 5px 10px;
+            display: grid;
+            grid-template-columns: 1.2fr 2fr;
+            gap: 70px;
+            opacity: 0;
+            filter: blur(30px);
+            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .container.reveal {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        /* 왼쪽 섹션 */
+        .left-col { position: sticky; top: 120px; height: fit-content; text-align: center; }
+        
+        .profile-drawing-container {
+            width: 320px;
+            height: 320px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-svg { width: 100%; height: 100%; }
+
+        /* 선 그리기 스타일 설정 */
+        .st0 {
+            fill: none;
+            stroke: #231815;
+            stroke-width: 6.0; /* 선 굵기 */
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-miterlimit: 10;
+            transition: fill 1s ease-in-out;
+        }
+
+        /* 애니메이션 핵심 클래스 */
+        .container.reveal .st0 {
+            animation: lineDrawing 3s ease-in-out forwards;
+        }
+
+        @keyframes lineDrawing {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .profile-info { text-align: left; font-size: 1.0rem; line-height: 1.2; color: var(--text-main); }
+        .profile-info h3 { font-size: 1.5rem; margin-bottom: 20px; border-bottom: 1px solid var(--line-color); padding-bottom: 10px; }
+
+        .profile-info p strong {
+            display: inline-block;
+            width: 70px;
+            margin-right: 15px;
+        }
+
+        /* 오른쪽 섹션 */
+        .right-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .info-section h3 { 
+            font-size: 1.1rem; color: var(--text-sub); letter-spacing: 0.1em;
+            margin-bottom: 20px; border-bottom: 1px solid var(--line-color); 
+            padding-bottom: 10px; display: flex; align-items: center;
+        }
+        .info-section h3::before { content: '○'; margin-right: 8px; font-size: 0.8rem; }
+        .info-list { list-style: none; padding: 0; margin: 0; font-size: 0.95rem; line-height: 1.8; color: var(--text-main); }
+        .info-list span { color: var(--text-sub); margin-right: 10px; font-size: 0.85rem; }
+
+        /* 스킬 바 디자인 */
+        .skill-item { margin-bottom: 15px; }
+        .skill-name { font-size: 0.9rem; margin-bottom: 5px; display: block; }
+        .skill-bar-bg { width: 100%; height: 4px; background: #eee; border-radius: 2px; position: relative; }
+        .skill-bar-fill { height: 100%; background: var(--text-main); border-radius: 2px; transition: width 1.5s ease-in-out; width: 0; }
+
+        /* --- 2. 검색창 인터랙션 --- */
+        .search-overlay {
+            position: fixed; inset: 0;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 1000; pointer-events: none;
+        }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 25px;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            width: 550px;
+            display: flex;
+            align-items: center;
+            transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: auto;
+        }
+
+        .search-bar.moved {
+            transform: scale(0); 
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        }
+
+        #typing-target { font-size: 1.4rem; font-weight: 500; color: var(--text-main); }
+        .cursor { color: var(--apple-blue); animation: blink 0.8s infinite; margin-left: 3px; }
+
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+    <div class="search-overlay">
+        <div class="search-bar" id="searchBar">
+            <span style="margin-right:15px; font-size:1.4rem;">🔍</span>
+            <span id="typing-target"></span>
+            <span class="cursor">|</span>
+        </div>
+    </div>
+
+    <div class="container" id="aboutContent">
+        <div class="left-col">
+            <div class="profile-drawing-container">
+                <svg version="1.1" id="profile_svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 733">
+                    <path class="st0" d="M322.8,161.6c1.1,8.5,1.7,18.9,0.8,30.8c-1.1,14.4-4,26.6-7,35.9c7.5-0.4,13.6-0.2,17.7,0
+                        c9.2,0.5,12.9,1.4,19.4,0.9c6.7-0.6,12-2.4,15.3-3.7c5.6-12.1,12.8-31.3,15.1-55.7c2.4-25.7-1.5-46.7-5.1-59.9"/>
+                    <path class="st0" d="M400,161.1c0.5,8.4,0.3,20.7-3.4,34.9c-4.2,15.9-11.1,27.7-16.2,35"/>
+                    <path class="st0" d="M410.7,181.2c-0.8,7.4-2.4,16.3-5.4,26c-2.6,8.6-5.8,15.9-8.9,22c8.5-0.7,17.7-1.1,27.4-0.9
+                        c3,0.1,5.8,0.2,8.7,0.3c5.1-7.6,12.4-20.6,16-38.1c4.5-21.7,1.2-39.6-1.3-49.1"/>
+                    <path class="st0" d="M465.9,163.2c-0.8,11.4-2.8,25.1-7,40.1c-2.6,9.2-5.6,17.4-8.7,24.7c5.9-0.6,12.6-1,20.1-0.7
+                        c6.4,0.2,12.2,0.9,17.4,1.7"/>
+                    <path class="st0" d="M483.7,190.2c-1.8,11.8-0.7,21.1,0.4,26.7c1.3,6.4,3,10.8,3.6,12.1c2.4,5.7,5.3,10.1,7.6,13.1"/>
+                    <path class="st0" d="M497,177.1c-1.4,8.2-2.6,21.3,0.4,36.8c3.2,16.9,10,29.3,14.7,36.6"/>
+                    <path class="st0" d="M367.9,60c-14.6-1-54.5-1.5-89.6,24.7c-18.7,13.9-29.2,30.4-34,38.1c-17,27.1-20.8,52.4-21.8,60.6
+                        c-2.9,23.8,0.7,43.4,4.1,55.8"/>
+                    <path class="st0" d="M267.5,239.6c-2.1-1.8-9.3-7.2-19.9-7.5c-1.5,0-12-0.2-21.1,7.1c-12.1,9.7-12.9,25.3-13.3,33.6
+                        c-0.3,6-0.9,22.6,10.8,38.2c12.5,16.7,30.2,20.5,34.5,21.3"/>
+                    <path class="st0" d="M306.1,173.1c0.9,10.8,1.2,27.5-3.2,47.1c-2,8.9-5.4,18-12.3,36.3c-12.2,32.6-15.6,36.8-18,51.5
+                        c-1.2,7.4-3,18.9-0.9,33c3.5,23.5,15.9,40.7,24.9,50.7"/>
+                    <path class="st0" d="M275.4,296.2c-3.9-2.8-10.5-7-19.7-9.2c-7.8-1.9-14.5-1.8-18.9-1.4"/>
+                    <path class="st0" d="M507.7,265c-5.1,32.3-11.3,58.7-16.3,77.7c-7.4,28.1-11.9,38.2-19.1,48.3c-4.9,6.9-17.7,24.5-41.9,34
+                        c-4.2,1.7-18.3,6.9-36.8,6.1c-46-1.8-76.3-38.3-84.1-47.7c-7.3-8.8-18.2-24-25.8-46.5"/>
+                    <path class="st0" d="M363.5,257.2c-1.3,3.1-2.5,6.2-3.8,9.3c-0.9-0.7-2.8-1.9-5-1.7c-4.4,0.4-8.2,6.2-7.1,11.3
+                        c0.7,3.6,3.9,7.3,7.7,7.2c4.8,0,8.5-6.2,7.7-11.1c-0.4-2.9-2.3-4.9-3.3-5.7"/>
+                    <path class="st0" d="M451.1,257.2c-1.3,3.1-2.5,6.2-3.8,9.3c-0.9-0.7-2.8-1.9-5-1.7c-4.4,0.4-8.2,6.2-7.1,11.3
+                        c0.7,3.6,3.9,7.3,7.7,7.2c4.8,0,8.5-6.2,7.7-11.1c-0.4-2.9-2.3-4.9-3.3-5.7"/>
+                    <path class="st0" d="M407.6,304.8c-1.4-0.1-1,7.4-6.8,13.3c-3.9,4-8.9,5.6-13.1,6.2c6.1,4.9,14.3,4.8,19.1,0.5
+                        C414.3,318.3,409.5,305,407.6,304.8z"/>
+                    <path class="st0" d="M349.9,359.6c6,3.9,24.4,14.7,49.8,13c23-1.5,38.7-12.3,44.5-16.8"/>
+                    <path class="st0" d="M376.2,60.1c9.8-3.5,28.2-8.5,50.8-5.4c34.8,4.9,56.3,25.8,64.3,34c21.7,21.8,29.1,45.6,32.9,58.7
+                        c0,0,7.3,23.8,5.9,53.9c-0.4,9.2-1.3,17.7-6.4,26.2c-2.5,4.2-5.3,7.3-7.4,9.3c2-0.9,9.6-4.1,17.4-0.9c7.1,2.9,10.2,9.3,12.1,13.5
+                        c9.1,19.7-0.4,41.9-1.6,44.6c-13,29.3-45.3,37.5-50.2,38.6c1.7,3.3,3.2,7.2,4.2,11.7c4.3,18.9-3.7,35-7.1,41.1"/>
+                    <path class="st0" d="M529,287.9c-4.7,1.7-10.1,4.1-15.8,7.5c-5,2.9-9.2,6-12.7,8.8"/>
+                    <path class="st0" d="M258.2,341.7c3.9,1.8,1.7,8.6,3.6,21.2c1.3,8.7,5.6,19.5,14,41.1c3.3,8.4,5.1,12.4,3.3,14
+                        c-3.5,3.4-17.9-6.4-19.7-7.7c-14.7-10.1-21-22.5-25.3-30.9c-2.7-5.3-3.4-8-3.3-11c0.3-7.9,6.5-13.6,11.5-18.1
+                        C247.5,345.8,254,339.8,258.2,341.7z"/>
+                    <path class="st0" d="M289.8,404.6c1.2,7.9,1.9,17.5,1.3,28.5c-0.8,14.3-3.6,26.2-6.4,35.2"/>
+                    <path class="st0" d="M455.1,410.2c-0.8,10.6-0.9,23,0.5,36.8c1,9.9,2.5,18.9,4.3,26.8"/>
+                    <path class="st0" d="M455.1,440.8c3.9,0.5,33.7,4.5,47.7,27.8c2.7,4.5,7.9,13.1,8.2,24.8c0.3,10.7-3.8,15.3-1.3,21.4
+                        c1.9,4.6,7.5,10.2,25.6,12.7"/>
+                    <path class="st0" d="M511,495.2c18.1,11.7,33.8,18.2,44.7,22c20.2,7,36,8.9,54.9,22.7c3.5,2.6,8.7,6.4,14.3,12.8
+                        c14.2,16,18.2,33.4,20.2,42.6c1.4,6.7,4.4,23.4,0.3,44.2c-2.1,10.7-5.5,19.3-8.4,25.3"/>
+                    <path class="st0" d="M471.3,463.1c1.1,5.5,3.7,23-6.1,40.6c-1.3,2.3-6.6,11.4-17.4,19.1c-18.2,12.9-38.2,11.9-44.8,11.2"/>
+                    <path class="st0" d="M297.7,648.6c-2.2,0.8-14.2,4.9-26.7-1.3c-1-0.5-12.7-6.4-17.1-19.7c-2.6-7.7-1.7-14.8,5.4-37.3
+                        c6.1-19.4,8-22.4,11.6-34c5.2-16.6,11-35.1,9.5-57.2c-0.6-9.5-2.8-23.9-10.9-40.9c3.8,2,9.3,5.2,15.3,10
+                        c8.2,6.5,13.3,12.7,15.3,15.2c0,0,13.1,15.9,33,34.4c31.4,29.1,76.6,28.7,81.7,28.6c10.5-0.2,27.9-2,48-11.3"/>
+                    <path class="st0" d="M469.4,554.5c0.3,2.8,1.4,8.3,5.3,13.9c4.7,6.6,10.7,9.5,13.3,10.6"/>
+                    <path class="st0" d="M483.2,553.4c2.3,4.1,5.6,9.2,10.2,14.3c4.9,5.4,9.8,9.4,13.8,12.1"/>
+                    <path class="st0" d="M275,418.5c-0.3,9.1-1.4,23.2-5.6,39.9c-3.1,12.2-5.5,16.9-11.9,36.4c-7.4,22.7-11.2,34.1-12.3,42.6
+                        c-1.6,12.4-1.2,32.2,12.4,58.2"/>
+                    <path class="st0" d="M243.6,439c-6.8,14.9-13.4,34.9-15,58.9c-1.1,16.4-2.7,39.1,9.5,63c4.1,8.1,8.8,14.2,12.3,18.3"/>
+                    <path class="st0" d="M240.1,390.2c-7.2,5.6-16.5,13.9-25.8,25.4c-13.8,17.1-20.8,32.9-23.5,39.6c-5.5,13.6-10.9,26.9-10.2,43.4
+                        c0.7,17,7.4,28.7,19.4,49c20.5,34.6,34.7,40.4,37,63.6c0.5,5.3,1.6,16.9-4.9,28.6c-10.7,19.6-33.7,23.7-37.7,24.3"/>
+                    <path class="st0" d="M234.2,379.5c-9.9,5.8-23.9,15.5-37.5,30.6c-8.6,9.5-16.8,18.8-22.5,33.2c-13.3,33.6-4.7,74.8-1.7,85.8
+                        c0.4,1.4,1.2,4.2,1.2,8.1c-0.2,12.4-9.4,22.2-17.1,28.6"/>
+                    <path class="st0" d="M172.6,529.2c-14.1,6.2-25.4,12.1-33.3,16.6c-17.6,9.8-26.5,14.8-34,23.7c-10.1,12.1-13.6,24.4-14.6,28.1
+                        c-2.3,9.1-2.2,16.3-2,22c0.3,9.5,2,25.4,10.5,44.2"/>
+                </svg>
+            </div>
+            
+            <div class="profile-info">
+                <h3>PROFILE</h3>
+                <p><strong>NAME</strong> 심은애</p>
+                <p><strong>BIRTH</strong> 2000.06.24 | Ulsan</p>
+                <p><strong>PHONE</strong> 010.8870.1084</p>
+                <p><strong>E-MAIL</strong> tlatla2ann@naver.com</p>
+                <p><strong>BLOG</strong> blog.naver.com/tlatla2ann</p>
+            </div>
+        </div>
+
+        <div class="right-col">
+            <div class="info-section">
+                <h3>EDUCATION</h3>
+                <ul class="info-list">
+                    <li><span>2016.02</span> 무룡중학교 졸업</li>
+                    <li><span>2019.02</span> 무룡고등학교 졸업</li>
+                    <li><span>2023.08</span> 울산대학교 주거환경학과 졸업</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>KEYWORD</h3>
+                <ul class="info-list">
+                    <li># 성실하고 부지런한</li>
+                    <li># 섬세하고 계획적인</li>
+                    <li># 꾸준하고 근면한</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>LICENSE</h3>
+                <ul class="info-list">
+                    <li><span>2019.04</span> 자동차운전면허증 2종 보통</li>
+                    <li><span>2021.03</span> 컴퓨터활용능력 2급</li>
+                    <li><span>2021.10</span> 컴퓨터그래픽스운용기능사</li>
+                    <li><span>2022.12</span> 전산응용건축제도기능사</li>
+                    <li><span>2023.02</span> GTQ포토샵 1급</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h3>AWARDS</h3>
+                <ul class="info-list">
+                    <li><span>2022.09</span> 교수학습개발센터 '노력상'</li>
+                    <li><span>2022.12</span> 교수학습개발센터 '금상'</li>
+                </ul>
+            </div>
+
+            <div class="info-section" style="grid-column: span 2;">
+                <h3>SKILL</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="skill-item">
+                        <span class="skill-name">Auto CAD</span>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">SketchUp</span>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Enscape</span>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Photoshop</span>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="95%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const text = "가치를 설계하는 디자이너, 심은애입니다.";
+        const target = document.getElementById('typing-target');
+        const searchBar = document.getElementById('searchBar');
+        const content = document.getElementById('aboutContent');
+        let i = 0;
+
+        // 1. 각 SVG 경로의 길이를 자동으로 계산하여 설정하는 함수
+        function initDrawing() {
+            const paths = document.querySelectorAll('#profile_svg path');
+            paths.forEach(path => {
+                const length = path.getTotalLength();
+                path.style.strokeDasharray = length;
+                path.style.strokeDashoffset = length;
+            });
+        }
+
+        function typeWriter() {
+            if (i < text.length) {
+                target.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            } else {
+                setTimeout(revealAbout, 300);
+            }
+        }
+
+        function revealAbout() {
+            searchBar.classList.add('moved');
+    
+            setTimeout(() => {
+                content.classList.add('reveal');
+        
+                // 스킬바 애니메이션 실행
+                document.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                    bar.style.width = bar.getAttribute('data-width');
+                });
+
+                // 애니메이션이 끝나갈 즈음 면 색상 채우기 (필요 시)
+                setTimeout(() => {
+                    document.querySelectorAll('.st0').forEach(path => {
+                        // 만약 나중에 검정색으로 다 채우고 싶다면 여기에 추가
+                        // path.style.fill = "#231815";
+                    });
+                }, 2500);
+
+                setTimeout(() => {
+                    document.querySelector('.search-overlay').style.display = 'none';
+                }, 500);
+            }, 400);
+        }
+
+        // 페이지 로드 시 초기화 및 타이핑 시작
+        window.onload = () => {
+            initDrawing();
+            setTimeout(typeWriter, 500);
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPACE DESIGN</title>
+    <style>
+/* 기본 레이아웃 설정 */
+.portfolio-container {
+    display: flex;
+    max-width: 95%;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: none;
+    min-height: 80vh;
+}
+
+/* 메뉴 목록 (3개) */
+.side-menu {
+    width: 280px;
+    background: #ffffff;
+    padding: 60px 30px;
+    border-right: 1px solid #eee;
+}
+
+.menu-item {
+    padding: 18px 25px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border-radius: 12px;
+    color: #999;
+    background: transparent;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.menu-item.active {
+    background: #fff;
+    color: #333;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.detail-content {
+    flex: 1;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    overflow-y: auto;
+}
+
+.detail-img {
+    max-width: 100%;
+    height: auto;
+    display: none;
+    transform: scale(1.1);
+    transform-origin: top center;
+    animation: fadeIn 1.0s ease forwards;
+    transform-origin: top center;
+}
+
+.detail-img.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: scale(1.1);
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1.1);
+    }
+}
+
+.back-btn-bottom {
+    display: inline-block;
+    margin-top: 200px;       /* 사진과 간격 */
+    margin-bottom: 20px;    /* 맨 밑 여백 */
+    padding: 15px 30px;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid #000;
+    border-radius: 50px;    /* 둥근 버튼 */
+    transition: all 0.3s ease;
+}
+
+.back-btn-bottom:hover {
+    background: #000;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .portfolio-container {
+        flex-direction: column;
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+    }
+
+    .side-menu {
+        width: 100%;
+        padding: 20px 10px;
+        border-right: none;
+        border-bottom: none;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+
+    .menu-item {
+        padding: 12px 20px;
+        margin-bottom: 12px;
+        font-size: 14px;
+        text-align: center;
+        border: 1px solid #f0f0f0;
+        border-radius: 10px;
+        background: #f9f9f9;
+        display: block;
+    }
+
+    .menu-item.active {
+        background: #333 !important;
+        color: #fff !important;
+        border-color: #333;
+        box-shadow: none;
+    }
+
+    .detail-content { padding: 20px 25px; }
+    .detail-img { width: 100%; border-radius: 10px; transform: none; }
+    .back-btn-bottom {
+        margin-top: 80px;
+        display: block;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+    </style>
+</head>
+<body>
+
+<div class="portfolio-container">
+    <div class="side-menu">
+        <div class="menu-item active" onclick="showDetail(0)">남부장애인복지관 설계공모</div>
+        <div class="menu-item" onclick="showDetail(1)">아파트 및 주택 인테리어</div>
+        <div class="menu-item" onclick="showDetail(2)">북카페 및 주거공간 프로젝트</div>
+    </div>
+
+    <div class="detail-content">
+        <img src="https://picsum.photos/800/1000?random=1" class="detail-img active" alt="Space">
+        <img src="https://picsum.photos/800/1000?random=2" class="detail-img" alt="Marketing">
+        <img src="https://picsum.photos/800/1000?random=3" class="detail-img" alt="Editorial">
+
+        <a href="index.html" class="back-btn-bottom">← BACK TO LIST</a>
+    </div>
+</div>
+
+<script>
+function showDetail(index) {
+    const menus = document.querySelectorAll('.menu-item');
+    const images = document.querySelectorAll('.detail-img');
+        
+    menus.forEach(m => m.classList.remove('active'));
+    images.forEach(i => i.classList.remove('active'));
+
+    menus[index].classList.add('active');
+    images[index].classList.add('active');
+}
+</script>
+
+</body>
+</html>
