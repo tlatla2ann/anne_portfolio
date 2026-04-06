@@ -17,107 +17,485 @@
 
 body {
     margin: 0;
-    background: linear-gradient(
-        135deg,
-        #e6ecf5 0%,
-        #dcd6f7 40%,
-        #f5d0e6 100%
-    );
+    background-color: #fafaf8;
+    min-height: 100vh;
 }
 
-/* 배경 */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 20% 30%, rgba(0,0,0,0.03), transparent 40%),
-                radial-gradient(circle at 80% 70%, rgba(0,0,0,0.04), transparent 40%);
-    z-index: -1;
-}
-
-/* 상단 네비 */
 header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    padding: 25px 60px;
+    padding: 30px 15% 10px;
+    position: relative;
     background: transparent;
+    z-index: 10000;
 }
 
 .logo {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
+    color: #1d1d1f;
+    order: 1;
+    margin-bottom: 0;
+    text-align: center;
+    border-right: none;
+}
+
+.typing-complete {
+    animation: blink 0.9s step-end infinite;
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+.logo.typing-cursor {
+    animation: blink 0.8s step-end infinite;
+}
+
+nav {
+    position: absolute;
+    top: 100px;
+    left: 15%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
 }
 
 nav a {
-    margin-left: 30px;
+    margin-left: 0;
     text-decoration: none;
+    color: #777;
+    font-size: 16px;
+    transition: color 0.3s ease;
+    text-align: left;
+}
+
+nav a:hover {
+    color: #444;
+    font-weight: 600;
+}
+
+.header-right {
+        position: absolute;
+        top: 90px;
+        right: 15%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-end;
+    }
+
+/* 실제 돋보기 렌즈 스타일 */
+.magnifier {
+    position: absolute;
+    width: 200px; 
+    height: 200px;
+    border: 2px solid #666;
+    border-radius: 50%;
+    display: none; 
+    z-index: 100000;
+    box-shadow: 
+        0 0 15px rgba(0,0,0,0.2),
+        inset 0 0 20px rgba(0,0,0,0.2);
+    pointer-events: none; 
+    overflow: hidden;
+    background-color: #fafaf8;
+}
+
+/* 돋보기 내부 복제 컨텐츠 */
+.magnifier-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* 너비 고정 */
+    transform-origin: 0 0;
+    pointer-events: none;
+}
+
+.magnify-mode {
+    cursor: none !important;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 22px;     /* 기존 28px에서 22px로 축소 (메뉴 글자 크기에 맞춰 정갈하게) */
+    height: 22px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.icon-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.icon-btn:hover {
+    transform: scale(1.15);
+}
+
+/* 의자 3D */
+.hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.floating-chair-3d {
+    position: absolute;
+    width: 330px; /* 의자 크기 */
+    max-width: 100%; /* 최대 폭 */
+    z-index: 10;
+    
+    /* 3D 애니메이션 */
+    animation: floatAndRotate 6s ease-in-out infinite;
+    
+    /* 위치 */
+    top: 40%; 
+    left: 50%;
+    transform: translate(-50%, -50%) perspective(1000px);
+
+    /* 그림자 효과 */
+    filter: drop-shadow(-5px 10px 10px rgba(0, 0, 0, 0.4)); /* 아래 그림자 */
+            drop-shadow(0px -6px 4px rgba(0, 0, 0, 0.1)); /* 위 그림자 */
+}
+
+/* 3D 애니메이션 */
+@keyframes floatAndRotate {
+    0% {
+        transform: translate(-50%, -50%) perspective(1000px) rotateY(-10deg) rotateX(5deg) scale(1);
+    }
+    25% {
+        transform: translate(-52%, -48%) perspective(1000px) rotateY(0deg) rotateX(-2deg) scale(1.02);
+    }
+    50% {
+        transform: translate(-50%, -50%) perspective(1000px) rotateY(10deg) rotateX(5deg) scale(1);
+    }
+    75% {
+        transform: translate(-48%, -52%) perspective(1000px) rotateY(0deg) rotateX(-2deg) scale(1.02);
+    }
+    100% {
+        transform: translate(-50%, -50%) perspective(1000px) rotateY(-10deg) rotateX(5deg) scale(1);
+    }
+}
+
+h1 {
+    position: relative;
+    z-index: 5;
+    margin-top: 200px;
     color: #333;
-    font-size: 15px;
-    letter-spacing: 1px;
+    font-size: 3em;
+}
+
+.hero-sub {
+    position: relative;
+    z-index: 5;
+    color: #666;
+    font-size: 1.2em;
 }
 
 /* 메인 타이틀 */
 .hero {
-    padding: 35px 60px 40px;
-    background: transparent;
+    padding: 130px 15% 0px; 
+    width: 100%;           
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;     
+    text-align: center;
+    overflow: hidden;
+    box-sizing: border-box;
+    min-height: 70vh;
+    z-index: 1;
 }
 
 .hero h1 {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 10px;
+    font-size: clamp(30px, 20vw, 305px);
+    font-weight: 800;
+    white-space: nowrap;
+    letter-spacing: -0.18em;
+    color: #1d1d1f;
+    line-height: 1;
+    text-transform: uppercase;
+    margin: 0;
+    margin-left: -0.125em;
+    margin-top: -150px;
+    display: block;
+    transform: translateX(-0.04em);
 }
 
-/* 그리드 영역 */
+.hero-quote-group {
+    align-self: flex-end;
+    text-align: left;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start
+}
+
+.hero-sub {
+    font-family: sans-serif;
+    font-size: clamp(15px, 1.2vw, 19px); 
+    font-weight: 400;
+    color: #1d1d1f;
+    margin-bottom: 25px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.made-by-signature {
+    position: absolute;
+    left: 15%;
+    bottom: 40px;
+    text-align: left;
+    font-family: sans-serif;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #1d1d1f;
+    z-index: 20;
+}
+
+.made-by-signature strong {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 5px;
+}
+
+/* 그리드 영역(PC버전) */
 .section {
-    padding: 10px 60px 20px;
-    background: transparent;
+    padding: 30px 15% 50px;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 18px;
+}
+
+/* 버튼 기본 스타일 */
+.details-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 17px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-bottom: -100px;
+}
+
+/* 이미지 변경 버튼*/
+.chair-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px; /* Made 간격 */
+}
+
+.resume-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #1d1d1f;
+    background-color: transparent;
+    color: #1d1d1f;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resume-btn:hover {
+    background-color: #1d1d1f;
+    color: #fff;
 }
 
 /* 카드 디자인 */
-.card {
+.card-wrapper {
+    display: flex;
+    flex-direction: column;
     position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.2s ease;
+}
+
+.card-wrapper.appear {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.grid a {
+    text-decoration: none;
+    color: inherit;
+    outline: none;
+    display: block;
+}
+
+.card-link {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border-radius: 60px;
     overflow: hidden;
-    border-radius: 14px;
-    cursor: pointer;
-    /* iOS 버그 방지용 */
-    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    text-decoration: none;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .card img {
     width: 100%;
-    height: 380px;
+    height: 100%;
     object-fit: cover;
-    transition: 0.4s;
-    filter: brightness(0.65);
-    display: block;
-    border-radius: 14px; /* 이미지 자체에 곡률 부여 */
+    filter: brightness(0.8);
+    transition: 0.6s;
 }
 
-.card:hover img {
-    transform: scale(1.05);
+/* 텍스트 영역 */
+.card-info .num {
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+.card-info {
+    position: absolute;
+    inset: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.card-info h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.card-info p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    word-break: keep-all;
+    
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.5s ease;
+}
+
+.card-icon {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    width: 45px;
+    height: 45px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s ease;
+    z-index: 5;
+}
+
+.card-icon::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border: 0.7px solid #ffffff; 
+    border-radius: 50%;
+    box-sizing: border-box;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0; 
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: -1; 
+}
+
+.card-icon .arrow {
+    font-size: 20px;
+    color: #333333;
+    display: inline-block;
+    transition: transform 0.5s ease, color 0.4s ease;
+}
+
+/* 마우스 호버 효과 */
+.card-wrapper:hover .card-info h3 {
+    margin-bottom: 8px;
+}
+
+.card-wrapper:hover .card-info p {
+    opacity: 1;
+    max-height: 100px;
+}
+
+.card-wrapper:hover .card {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: none;
+}
+
+.card-wrapper:hover .card img {
     filter: brightness(1);
 }
 
-.card-title {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-    font-size: 18px;
-    background: rgba(0,0,0,0.5);
-    padding: 8px 14px;
-    border-radius: 6px;
+.card-wrapper:hover .card-icon::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.3); 
 }
 
-/* ===== ABOUT 모달 ===== */
+.card-wrapper:hover .card-icon .arrow {
+    transform: rotate(180deg);
+}
+
+.details-btn:hover {
+    transform: translateX(6px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.details-btn .arrow {
+    margin-right: 8px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.details-btn:hover .arrow {
+    transform: translateX(1.5px);
+}
+
+/* ===== CONTACT 모달 ===== */
 .modal {
     display: none;
     position: fixed;
@@ -126,6 +504,14 @@ nav a {
     backdrop-filter: blur(4px);
     justify-content: center;
     align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
 }
 
 .modal-content {
@@ -135,10 +521,113 @@ nav a {
     border-radius: 16px;
     text-align: center;
     position: relative;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.255);
+}
+
+.modal.show .modal-content {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .modal-content h2 {
     margin-bottom: 20px;
+}
+
+/* 모달 내 SNS 아이콘 스타일 */
+.sns-icons {
+    margin-top: 45px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+.sns-icons img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s;
+}
+.sns-icons img:hover {
+    transform: scale(1.15);
+}
+
+/* 모바일 전용 모달 레이아웃 */
+@media (max-width: 1600px) {
+.hero {
+        min-height: 100vh;      /* 최소 화면 높이는 유지 */
+        overflow: visible !important; /* [핵심] 삐져나온 버튼이 보이게 설정 */
+        padding-bottom: 200px !important; /* 아래쪽에 여유 공간 확보 */
+    }
+
+.hero h1 {
+        font-size: 240px; 
+        margin-top: -120px !important;
+    }
+
+.floating-chair-3d {
+        width: 260px !important; 
+        top: 30% !important;
+    }
+
+    header, .section {
+        padding-left: 15% !important;
+        padding-right: 15% !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+.section {
+        padding-top: 0px !important; 
+        margin-top: -140px !important;
+        background-color: #fafaf8;
+        position: relative;
+        z-index: 5;
+    }
+    
+    .made-by-signature {
+        left: 15% !important;
+        bottom: 180px !important;
+    }
+
+    .hero-quote-group {
+        right: 10% !important;
+        bottom: 150px !important;
+    }
+
+    .hero-sub {
+        font-size: 15px !important;
+        margin-bottom: 20px
+    }
+
+    .details-btn {
+        display: inline-block;
+        padding: 10px 25px;
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 50px;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 768px) {
+    .modal-content {
+        width: 700px;
+        padding: 80px 50px;
+    }
+    .modal-content h2 {
+        font-size: 40px;
+        margin-bottom: 50px;
+    }
+    .modal-content p {
+        font-size: 24px;
+        line-height: 1.2;
+        margin-bottom: 15px;
+    }
+    .sns-icons img {
+        width: 50px;
+        height: 50px;
+    }
 }
 
 .close {
@@ -151,103 +640,228 @@ nav a {
 
 /* ===== 모바일 ===== */
 @media (max-width: 768px) {
-
     header {
-        padding: 15px 20px;
+        padding: 20px 20px 10px;
+        display: flex;
+        flex-direction: column; 
+        gap: 60px;
+    }
+
+    /* ABOUT, CONTACT 정렬 */
+    nav {
+        order: 1;
+        width: 100%;
         display: flex;
         justify-content: flex-end;
     }
-
-    .logo {
-        display: flex;
-        gap: 15px;
+    
+    nav a {
+        display: inline-block;
+        font-size: 14px;
+        color: #777;
+        text-decoration: none;
+        border-bottom: 1px solid #777; 
+        padding-bottom: 2px;
+        margin-left: 18px;
     }
 
-    nav a {
-    margin-left: 8px;
-    font-size: 13px;
+    /* 맨 위 상단 로고 */
+    .logo {
+        order: 2;
+        width: 100%;
+        text-align: left;
+        font-size: 18px;
+        color: #1d1d1f;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .hero { padding: 10px 20px 10px; }
+    .hero h1 { font-size: 36px; margin-bottom: 30px; }
+    .section { padding: 10px 20px; }
+    .grid { grid-template-columns: 1fr; gap: 30px; }
+
+    .section { padding: 10px 20px; }
+    .grid { grid-template-columns: 1fr; gap: 30px; }
+
+    /* 사진과 글자를 좌우로 배치 */
+    .card-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* 사진과 글자 간격 */
+        width: 100%;
+        position: relative;
+    }
+
+    /* 모바일용 사진 사이즈 (가로형) */
+    .card-link { 
+        position: static;
+        flex: 1.4;
+        display: block;
+        margin: 0;
+    }
+
+    .card-link::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        right: -100px;
+        z-index: 999;
+        background: rgba(0,0,0,0);
+        cursor: pointer;
+    }
+
+    .card { 
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-radius: 14px;
+        margin-bottom: 0;
+        transform: none
 }
 
-    .hero {
-        padding: 20px;
+    .card-info { 
+        flex: 1.2; 
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+        pointer-events: none;
     }
 
-    .hero h1 {
-        font-size: 32px;
+    .card-info h3 { 
+        font-size: 15px;
+        margin-bottom: 2px;
+        font-weight: 700;
+        line-height: 1.2;
     }
 
-    .section {
-        padding: 10px 20px 20px;
-    }
-
-/* 1열 3줄 구조 */
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-/* 가로로 긴 사진 */
-    .card img {
-        width: 100%;
-        height: 130px;
-        object-fit: cover;
-    }
-
-    .hero h1 {
-        font-size: 36px;
+    .card-info p { 
+        font-size: 11px;
+        line-height: 1.4;
+        color: #888;
+        margin: 0;
     }
 }
 
 /* 푸터 */
 footer {
-    padding: 40px;
+    margin-top: 20px;
+    padding: 30px 20px;
     text-align: center;
     color: #888;
     font-size: 14px;
 }
+
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">안녕하세요, 심은애입니다.</div>
+    <div class="logo">- The Work of SIMEUNAE -</div>
     <nav>
         <a href="about.html">ABOUT</a>
         <a href="#" id="contactBtn">CONTACT</a>
     </nav>
+    <div class="header-right">
+        <button class="icon-btn" id="searchBtn">
+            <img src="https://cdn-icons-png.flaticon.com/512/2989/2989907.png">
+        </button>
+        <button class="icon-btn">
+            <img src="https://uxwing.com/wp-content/themes/uxwing/download/file-and-folder-type/copied-icon.png">
+        </button>
+    </div>
 </header>
 
 <section class="hero">
+    <img src="./chair.png" alt="chair" class="floating-chair-3d">
+    
     <h1>PORTFOLIO</h1>
+
+    <div class="made-by-signature">
+        <div class="chair-controls">
+        <a href="./심은애_이력서.pdf" target="_blank" download class="resume-btn active" style="text-decoration: none;">1</a>
+        <a href="./심은애_자기소개서.pdf" target="_blank" download class="resume-btn" style="text-decoration: none;">2</a>
+    </div>
+    Made By<br>
+    <strong>SIM EUNAE</strong>
+</div>
+    
+    <div class="hero-quote-group">
+        <p class="hero-sub">
+            Design is not just what it looks like and feels like.<br>Design is how it works.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Steve Jobs -
+        </p>
+        <a href="https://blog.naver.com/PostList.naver?blogId=anne_daily&from=postList&categoryNo=42" class="details-btn">
+            <span class="arrow">→</span> Design details
+        </a>
+    </div>
 </section>
 
 <section class="section">
     <div class="grid">
-
-        <div class="card">
-            <img src="https://picsum.photos/600/800?random=1">
-            <div class="card-title">Project 01</div>
+        <div class="card-wrapper">
+            <a href="space_design.html" class="card-link">
+                <div class="card">
+                    <img src="https://picsum.photos/800/1200?random=1">
+                </div>
+                <div class="card-info">
+                    <span class="num">/01</span>
+                    <h3>SPACE<br>DESIGN</h3>
+                    <p>궁극의 공간미와 사용자 경험을<br>고려한 건축 인테리어 디자인.</p>
+                    <div class="card-icon">
+                        <span class="arrow">↑</span>
+                    </div>
+                </div>
+            </a>
         </div>
 
-        <div class="card">
-            <img src="https://picsum.photos/600/800?random=2">
-            <div class="card-title">Project 02</div>
+        <div class="card-wrapper">
+            <a href="marketing_design.html" class="card-link">
+                <div class="card">
+                    <img src="https://picsum.photos/800/1200?random=2">
+                </div>
+                <div class="card-info">
+                    <span class="num">/02</span>
+                    <h3>MARKETING<br>DESIGN</h3>
+                    <p>브랜드 가치를 시각적으로 전달하는<br>전략적인 마케팅 브랜딩.</p>
+                    <div class="card-icon">
+                        <span class="arrow">↑</span>
+                    </div>
+                </div>
+            </a>
         </div>
 
-        <div class="card">
-            <img src="https://picsum.photos/600/800?random=3">
-            <div class="card-title">Project 03</div>
+        <div class="card-wrapper">
+            <a href="editorial_design.html" class="card-link">
+                <div class="card">
+                    <img src="https://picsum.photos/800/1200?random=3">
+                </div>
+                <div class="card-info">
+                    <span class="num">/03</span>
+                    <h3>EDITORIAL<br>DESIGN</h3>
+                    <p>콘텐츠의 본질을 담아내는<br>세련된 편집 및 레이아웃 디자인.</p>
+                    <div class="card-icon">
+                        <span class="arrow">↑</span>
+                    </div>
+                </div>
+            </a>
         </div>
-
     </div>
 </section>
 
-<footer>
-    © 2026 SIMEUNAE Portfolio
+<div id="magnifier" class="magnifier">
+    </div>
+</div>
+
+<footer>© 2026 SIMEUNAE Portfolio</footer>
 </footer>
 
-<!-- CONTACT MODAL -->
 <div id="contactModal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
@@ -255,10 +869,84 @@ footer {
     <p>심은애</p>
     <p>Email: tlatla2ann@naver.com</p>
     <p>Phone: 010-8870-1084</p>
+    
+    <div class="sns-icons">
+        <a href="https://open.kakao.com/me/simann" target="_blank"><img src="https://i.namu.wiki/i/goiPvfTBSPHryOTDSoH0jhztxnizlaguo7FASMPdsUoccL-GnFuJH5G7rbPL4MX7K28pnG1LrloWpYFYHAwyuQ.svg" alt="Kakao"></a>
+        <a href="https://blog.naver.com/anne_daily" target="_blank"><img src="https://i.namu.wiki/i/V7VquHSp_54FEx3EQtUAQWAC3V90G2M6OIiHCNO78NCCGHLm_OCFr4rOSEI148Pyu3tZShPUAiZlQ2beUkPoZA.svg" alt="Blog"></a>
+        <a href="https://www.instagram.com/hong_eunn" target="_blank"><img src="https://i.namu.wiki/i/PpCUHjc8PoAlAWoSip-m3KtgYMq7Ft1sI2BiCioMrclYCFdnjCEVKdPyXJ3yqXgHjgboqOp-8Q9z71WTisQy_A.svg" alt="Instagram"></a>
+    </div>
   </div>
 </div>
 
 <script>
+const cardWrappers = document.querySelectorAll('.card-wrapper');
+
+/* 카드 등장 애니메이션 */
+function revealCards() {
+    const cardWrappers = document.querySelectorAll('.card-wrapper');
+    cardWrappers.forEach((wrapper, idx) => {
+        setTimeout(() => {
+            wrapper.classList.add('appear');
+        }, idx * 300);
+    });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    revealCards(); 
+});
+
+/* --- 진짜 돋보기 확대 효과 (스크롤 보정 완료) --- */
+const searchBtn = document.getElementById('searchBtn');
+const magnifier = document.getElementById('magnifier');
+let isMagnifyMode = false;
+const zoomLevel = 1.8; // 확대 배율을 1.8배로 살짝 조정
+
+searchBtn.onclick = (e) => {
+    e.preventDefault();
+    isMagnifyMode = !isMagnifyMode;
+
+    if (isMagnifyMode) {
+        // 돋보기 켤 때 현재 body의 스냅샷을 찍어 복제
+        magnifier.innerHTML = `<div class="magnifier-content" style="width:${document.documentElement.scrollWidth}px;">${document.body.innerHTML}</div>`;
+        
+        const content = magnifier.querySelector('.magnifier-content');
+        content.style.transform = `scale(${zoomLevel})`;
+        
+        magnifier.style.display = 'block';
+        document.body.classList.add('magnify-mode');
+    } else {
+        disableMagnifier();
+    }
+};
+
+document.addEventListener('mousemove', (e) => {
+    if (!isMagnifyMode) return;
+
+    const { clientX, clientY, pageX, pageY } = e;
+    
+    // 1. 돋보기 렌즈(테두리) 위치 - 절대 좌표(pageX/Y) 사용
+    magnifier.style.left = `${pageX - 100}px`;
+    magnifier.style.top = `${pageY - 100}px`;
+
+    // 2. 돋보기 내부 컨텐츠 위치 역계산 (스크롤 값 포함)
+    const content = magnifier.querySelector('.magnifier-content');
+    if (content) {
+        // 스크롤된 만큼을 더해서 정확한 지점을 확대하게 만듦
+        const scrollX = window.scrollX;
+        const scrollY = window.scrollY;
+        
+        // 마우스가 가리키는 실제 절대 지점을 기준으로 이동
+        content.style.left = `-${(pageX) * zoomLevel - 100}px`;
+        content.style.top = `-${(pageY) * zoomLevel - 100}px`;
+    }
+});
+
+// ESC 키 종료 및 스크롤 시 좌표 갱신 방지
+window.onkeydown = (e) => {
+    if (e.key === 'Escape') disableMagnifier();
+};
+
+/* 모달 관련 로직 */
 const modal = document.getElementById("contactModal");
 const btn = document.getElementById("contactBtn");
 const closeBtn = document.querySelector(".close");
@@ -266,26 +954,37 @@ const closeBtn = document.querySelector(".close");
 btn.onclick = function(e) {
   e.preventDefault();
   modal.style.display = "flex";
+  setTimeout(() => {
+        modal.classList.add("show");
+    }, 10);
 }
 
 closeBtn.onclick = function() {
-  modal.style.display = "none";
+  modal.classList.remove("show");
+  setTimeout(() => {
+        modal.style.display = "none";
+    }, 400);
 }
 
 window.onclick = function(e) {
   if (e.target == modal) {
-    modal.style.display = "none";
-  }
+    modal.classList.remove("show");
+        setTimeout(() => {
+            modal.style.display = "none";
+        }, 400);
+    }
 }
+
+/* URL 복사 */
+const copyBtn = document.querySelector('.header-right .icon-btn:last-child');
+copyBtn.onclick = (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(window.location.href).then(() => {
+        alert("홈페이지 주소가 복사되었습니다.");
+    });
+};
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
