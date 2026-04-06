@@ -6,137 +6,312 @@
     <title>About | 심은애</title>
     <link href="https://cdn.jsdelivr.net/gh/sun-peak/suit-font@v1/style.css" rel="stylesheet">
     <style>
-        :root {
-            --apple-blue: #007AFF;
-            --text-main: #1d1d1f;
-            --text-sub: #86868b;
-            --line-color: #d2d2d7;
-        }
+    :root {
+        --apple-blue: #007AFF;
+        --text-main: #1d1d1f;
+        --text-sub: #86868b;
+        --line-color: #d2d2d7;
+    }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            font-family: 'SUIT', sans-serif;
-            background-color: #fff;
-            overflow-x: hidden;
-        }
+    body, html {
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
+        font-family: 'SUIT', sans-serif;
+        background-color: #fff;
+        overflow-x: hidden;
+    }
 
-        /* --- 1. 배경 컨텐츠 레이아웃 --- */
+    /* --- 1. 배경 컨텐츠 레이아웃 --- */
+    .container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 10vh 50px; 
+        display: grid;
+        grid-template-columns: 1fr 2fr; /* 비율 최적화 */
+        gap: 100px;
+        opacity: 0;
+        filter: blur(30px);
+        transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .container.reveal {
+        opacity: 1;
+        filter: blur(0);
+    }
+
+    /* 왼쪽 섹션: 화면 중앙에 더 잘 위치하도록 */
+    .left-col { 
+        position: sticky; 
+        height: fit-content; 
+        text-align: center; 
+    }
+    
+    .profile-drawing-container {
+        width: 100%;
+        max-width: 380px;
+        aspect-ratio: 1/1;
+        margin: 0 auto 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profile-svg { width: 100%; height: 100%; }
+
+    .st0 {
+        fill: none;
+        stroke: #231815;
+        stroke-width: 5.5; 
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-miterlimit: 10;
+        transition: fill 1s ease-in-out;
+    }
+
+    .container.reveal .st0 {
+        animation: lineDrawing 3s ease-in-out forwards;
+    }
+
+    @keyframes lineDrawing {
+        to { stroke-dashoffset: 0; }
+    }
+
+    .profile-info { text-align: left; font-size: 1.15rem; line-height: 1.7; color: var(--text-main); }
+    .profile-info h3 { font-size: 1.5rem; margin-bottom: 26px; border-bottom: 2px solid var(--text-main); padding-bottom: 13px; }
+    .profile-info p { margin: 15px 0; }
+    .profile-info p strong {
+        display: inline-block;
+        width: 80px;
+        color: var(--text-sub);
+        font-weight: 500;
+    }
+
+    /* 오른쪽 섹션 */
+    .right-col { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+    .info-section h3 { 
+        font-size: 1.15rem; color: var(--text-sub); letter-spacing: 0.1em;
+        margin-bottom: 20px; border-bottom: 1px solid var(--line-color); 
+        padding-bottom: 10px; display: flex; align-items: center;
+    }
+    .info-section h3::before { content: '○'; margin-right: 8px; font-size: 0.8rem; }
+    .info-list { list-style: none; padding: 0; margin: 0; font-size: 1.1rem; line-height: 2.2; color: var(--text-main); }
+    .info-list span { color: var(--text-sub); margin-right: 12px; font-size: 0.95rem; font-weight: 300; }
+
+    /* 스킬 바 */
+    .skill-item { margin-bottom: 20px; }
+    .skill-name { font-size: 1.05rem; margin-bottom: 8px; display: block; font-weight: 500; }
+    .skill-bar-bg { width: 100%; height: 3px; background: #f2f2f7; border-radius: 2px; position: relative; }
+    .skill-bar-fill { height: 100%; background: var(--text-main); border-radius: 2px; transition: width 1.5s ease-in-out; width: 0; }
+
+.back-btn {
+    position: fixed;
+    top: 50%;           /* 세로 중앙 */
+    left: 150px !important;
+    transform: translateY(-50%); /* 정확한 중앙 정렬 */
+    width: 50px;
+    height: 50px;
+    border: 1px solid #1d1d1f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #1d1d1f;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    
+    /* 처음에는 숨김 */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.8s ease; 
+}
+
+/* 등장 클래스 */
+.back-btn.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-btn:hover {
+    background-color: #1d1d1f;
+    color: #fff;
+    transform: translateY(-50%) scale(1.1);
+}
+
+    /* 배율 125% */
+    @media (max-width: 1550px) {
+        body {
+            zoom: 0.95;
+        }
         .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 5px 5px 10px;
+            min-height: 105vh;
+            height: 100vh;
+            padding-top: 0;     
+            padding-bottom: 0;
             display: grid;
-            grid-template-columns: 1.2fr 2fr;
-            gap: 70px;
-            opacity: 0;
-            filter: blur(30px);
-            transition: all 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-
-        .container.reveal {
-            opacity: 1;
-            filter: blur(0);
-        }
-
-        /* 왼쪽 섹션 */
-        .left-col { position: sticky; top: 120px; height: fit-content; text-align: center; }
-        
-        .profile-drawing-container {
-            width: 320px;
-            height: 320px;
-            margin: 0 auto 20px;
-            display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            max-width: 1100px;
+            grid-template-columns: 1fr 2.5fr;
+            gap: 100px;
+            box-sizing: border-box;
         }
 
-        .profile-svg { width: 100%; height: 100%; }
-
-        /* 선 그리기 스타일 설정 */
-        .st0 {
-            fill: none;
-            stroke: #231815;
-            stroke-width: 6.0; /* 선 굵기 */
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke-miterlimit: 10;
-            transition: fill 1s ease-in-out;
+        .profile-drawing-container {
+            width: 300px;
+            height: 300px;
         }
 
-        /* 애니메이션 핵심 클래스 */
-        .container.reveal .st0 {
-            animation: lineDrawing 3s ease-in-out forwards;
-        }
+        .profile-info { font-size: 1.0rem; line-height: 1.5; }
+        .profile-info h3 { font-size: 1.2rem; }
+        
+        .info-section h3 { font-size: 1.0rem; }
+        .info-list { font-size: 0.9rem; line-height: 1.9; }
+        .right-col { gap: 45px; }
 
-        @keyframes lineDrawing {
-            to { stroke-dashoffset: 0; }
-        }
-
-        .profile-info { text-align: left; font-size: 1.0rem; line-height: 1.2; color: var(--text-main); }
-        .profile-info h3 { font-size: 1.5rem; margin-bottom: 20px; border-bottom: 1px solid var(--line-color); padding-bottom: 10px; }
-
-        .profile-info p strong {
-            display: inline-block;
-            width: 70px;
-            margin-right: 15px;
-        }
-
-        /* 오른쪽 섹션 */
-        .right-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .info-section h3 { 
-            font-size: 1.1rem; color: var(--text-sub); letter-spacing: 0.1em;
-            margin-bottom: 20px; border-bottom: 1px solid var(--line-color); 
-            padding-bottom: 10px; display: flex; align-items: center;
-        }
-        .info-section h3::before { content: '○'; margin-right: 8px; font-size: 0.8rem; }
-        .info-list { list-style: none; padding: 0; margin: 0; font-size: 0.95rem; line-height: 1.8; color: var(--text-main); }
-        .info-list span { color: var(--text-sub); margin-right: 10px; font-size: 0.85rem; }
-
-        /* 스킬 바 디자인 */
-        .skill-item { margin-bottom: 15px; }
-        .skill-name { font-size: 0.9rem; margin-bottom: 5px; display: block; }
-        .skill-bar-bg { width: 100%; height: 4px; background: #eee; border-radius: 2px; position: relative; }
-        .skill-bar-fill { height: 100%; background: var(--text-main); border-radius: 2px; transition: width 1.5s ease-in-out; width: 0; }
-
-        /* --- 2. 검색창 인터랙션 --- */
-        .search-overlay {
-            position: fixed; inset: 0;
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; pointer-events: none;
+        .back-btn {
+            left: 80px;
+            width: 42px;
+            height: 42px;
         }
 
         .search-bar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 12px 25px;
-            border-radius: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            width: 550px;
-            display: flex;
-            align-items: center;
-            transition: all 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: auto;
+            padding: 12px 20px !important;
+            max-width: 550px !important;
+            height: 30px !important;
         }
 
-        .search-bar.moved {
-            transform: scale(0); 
-            opacity: 0;
-            transition: all 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+        #typing-target {
+            font-size: 1.2rem !important;
         }
+    }
 
-        #typing-target { font-size: 1.4rem; font-weight: 500; color: var(--text-main); }
-        .cursor { color: var(--apple-blue); animation: blink 0.8s infinite; margin-left: 3px; }
+    /* 모바일(스마트폰) 대응 */
+@media (max-width: 600px) {
+    body {
+        zoom: 1.0 !important;
+        overflow-y: auto !important;
+    }
 
-        @keyframes blink { 50% { opacity: 0; } }
-    </style>
+    .container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 40px 20px !important;
+        height: auto !important;
+        gap: 30px !important;
+    }
+
+    /* 1. 프로필 섹션 (맨 위) */
+    .left-col {
+        order: 1 !important; 
+        position: relative !important;
+        width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 2. 오른쪽 컬럼 내부 요소들을 개별 제어하기 위해 Flex 설정 */
+    .right-col {
+        order: 2 !important;
+        display: flex !important;
+        flex-direction: column !important; /* 세로 나열 */
+        width: 100% !important;
+        gap: 35px !important;
+    }
+
+    /* --- 여기서부터 은애님이 원하는 순서 지정 (order) --- */
+    
+    /* EDUCATION (학력) */
+    .info-section:nth-child(1) { order: 1 !important; }
+    
+    /* LICENSE (자격증) */
+    .info-section:nth-child(3) { order: 2 !important; }
+    
+    /* AWARDS (수상) */
+    .info-section:nth-child(4) { order: 3 !important; }
+    
+    /* KEYWORD (키워드) */
+    .info-section:nth-child(2) { order: 4 !important; }
+    
+    /* SKILL (스킬) */
+    .info-section:nth-child(5) { order: 5 !important; }
+
+    /* 모바일 가독성을 위한 디테일 수정 */
+    .info-section {
+        width: 100% !important;
+    }
+    .info-section > div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+    .profile-info { text-align: left !important; }
+    .profile-info h3 { text-align: center !important; }
+    .profile-drawing-container { width: 220px !important; height: 220px !important; }
+
+    /* 뒤로가기 버튼 */
+    .back-btn {
+        top: 50px !important;
+        left: 15px !important;
+        width: 38px !important;
+        height: 38px !important;
+    }
+
+    .search-overlay {
+        display: none !important;
+    }
+}
+
+    /* --- 2. 검색창 인터랙션 --- */
+    .search-overlay {
+        position: fixed; inset: 0;
+        display: flex; justify-content: center; align-items: center;
+        z-index: 1000; pointer-events: none;
+    }
+
+    .search-bar {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 20px 40px;
+        border-radius: 30px;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+        width: 90%;
+        max-width: 600px;
+
+        height: 25px;
+        display: flex;
+        align-items: center;
+        transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        pointer-events: auto;
+    }
+
+    .search-bar.moved {
+        transform: scale(0.8); 
+        opacity: 0;
+        transition: all 0.8s ease-in;
+    }
+
+    #typing-target { font-size: 1.5rem; font-weight: 500; color: var(--text-main); }
+    .cursor { color: var(--apple-blue); animation: blink 0.8s infinite; margin-left: 3px; }
+
+    @keyframes blink { 50% { opacity: 0; } }
+</style>
 </head>
 <body>
 
+<a href="index.html" class="back-btn" id="backBtn">
+    <span class="arrow">&lt;</span>
+</a>
+
     <div class="search-overlay">
         <div class="search-bar" id="searchBar">
-            <span style="margin-right:15px; font-size:1.4rem;">🔍</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:15px;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
             <span id="typing-target"></span>
             <span class="cursor">|</span>
         </div>
@@ -295,7 +470,7 @@
             if (i < text.length) {
                 target.innerHTML += text.charAt(i);
                 i++;
-                setTimeout(typeWriter, 100);
+                setTimeout(typeWriter, 80);
             } else {
                 setTimeout(revealAbout, 300);
             }
@@ -307,7 +482,7 @@
             setTimeout(() => {
                 content.classList.add('reveal');
         
-                // 스킬바 애니메이션 실행
+                document.getElementById('backBtn').classList.add('show');
                 document.querySelectorAll('.skill-bar-fill').forEach(bar => {
                     bar.style.width = bar.getAttribute('data-width');
                 });
@@ -326,11 +501,15 @@
             }, 400);
         }
 
-        // 페이지 로드 시 초기화 및 타이핑 시작
+        // 페이지 로드 시 타이핑 시작
         window.onload = () => {
             initDrawing();
-            setTimeout(typeWriter, 500);
-        };
+            if (window.innerWidth <= 600) {
+        revealAbout(); 
+    } else {
+        setTimeout(typeWriter, 500);
+    }
+};
     </script>
 </body>
 </html>
